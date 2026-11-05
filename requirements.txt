@@ -1,0 +1,9 @@
+yfinance>=0.2.50
+pandas>=2.2
+numpy>=1.26
+matplotlib>=3.8
+pillow>=10.0
+scikit-learn>=1.4
+tqdm>=4.66
+# CPU build is enough; for GPU install torch from https://pytorch.org/get-started/locally/
+torch>=2.2

@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+data/raw/
+data/charts/
+data/predictions/*.png
+models/*.pt
+.venv/

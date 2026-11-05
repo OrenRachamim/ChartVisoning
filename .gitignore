@@ -4,3 +4,6 @@ data/raw/
 data/charts/
 data/predictions/*.png
 .venv/
+experiments/results/*.pt
+experiments/results/perstock_*/
+experiments/results/*.log

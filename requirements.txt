@@ -7,3 +7,4 @@ scikit-learn>=1.4
 tqdm>=4.66
 # CPU build is enough; for GPU install torch from https://pytorch.org/get-started/locally/
 torch>=2.2
+scipy>=1.11

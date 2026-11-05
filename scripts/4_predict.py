@@ -20,6 +20,9 @@ def main() -> None:
     p.add_argument("--model", default=None, help="checkpoint path (default models/chart_cnn.pt)")
     p.add_argument("--no-charts", action="store_true", help="skip drawing forecast charts")
     p.add_argument("--top", type=int, default=20, help="rows to print")
+    p.add_argument("--per-stock-dir", default=None,
+                   help="folder with fine-tuned <TICKER>.pt models to blend in (see experiments/perstock.py)")
+    p.add_argument("--ensemble-weight", type=float, default=0.5, help="weight of the per-stock model")
     args = p.parse_args()
     cfg = config_from_args(args)
     ckpt = Path(args.model) if args.model else cfg.model_dir / "chart_cnn.pt"
@@ -28,7 +31,9 @@ def main() -> None:
 
     tickers = resolve_tickers(args, cfg)
     frames = {t: add_indicators(df, cfg.ma_window) for t, df in load_all(cfg.raw_dir, tickers).items()}
-    table = predict_all(frames, cfg, ckpt, draw_charts=not args.no_charts)
+    table = predict_all(frames, cfg, ckpt, draw_charts=not args.no_charts,
+                        per_stock_dir=Path(args.per_stock_dir) if args.per_stock_dir else None,
+                        ensemble_weight=args.ensemble_weight)
     out = cfg.pred_dir / "forecast.csv"
     table.to_csv(out, index=False)
 

@@ -24,10 +24,13 @@ def base_parser(description: str) -> argparse.ArgumentParser:
     p.add_argument("--img-size", type=int, default=Config.img_size)
     p.add_argument("--model-width", type=int, default=Config.model_width,
                    help="width of the CNN (16 = fast on CPU, 32 = bigger)")
-    p.add_argument("--channels", nargs="+", default=list(Config.channels), choices=["ma10", "close"])
+    p.add_argument("--channels", nargs="+", default=list(Config.channels), choices=["ma", "close"],
+                   help="lines drawn in each image (ma = the --ma moving average)")
     p.add_argument("--horizons", nargs="+", type=int, default=list(Config.horizons))
-    p.add_argument("--label-source", default=Config.label_source, choices=["ma10", "close"])
-    p.add_argument("--flat-threshold", type=float, default=Config.flat_threshold)
+    p.add_argument("--label-source", default=Config.label_source, choices=["ma", "close"],
+                   help="what the up/flat/down label measures")
+    p.add_argument("--flat-threshold", default=Config.flat_threshold,
+                   help="fixed |return| for the flat class, or 'auto' for train-set tertiles")
     p.add_argument("--path-horizon", type=int, default=Config.path_horizon)
     p.add_argument("--epochs", type=int, default=Config.epochs)
     p.add_argument("--batch-size", type=int, default=Config.batch_size)
@@ -56,7 +59,7 @@ def config_from_args(args: argparse.Namespace) -> Config:
         channels=tuple(args.channels),
         horizons=tuple(args.horizons),
         label_source=args.label_source,
-        flat_threshold=args.flat_threshold,
+        flat_threshold="auto" if str(args.flat_threshold) == "auto" else float(args.flat_threshold),
         path_horizon=args.path_horizon,
         epochs=args.epochs,
         batch_size=args.batch_size,

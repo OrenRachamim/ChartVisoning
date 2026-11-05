@@ -32,7 +32,7 @@ def main() -> None:
         plot_ma_chart(df, t, cfg.chart_dir / f"{t}.png", ma_col=ma_col, days=cfg.chart_days)
         n += 1
         if n <= args.previews:
-            cols = [ma_col if c == "ma10" else "Close" for c in cfg.channels]
+            cols = [ma_col if c != "close" else "Close" for c in cfg.channels]
             series = df[cols].tail(cfg.window).to_numpy()
             save_window_preview(series, cfg.chart_dir / "_windows" / f"{t}_last{cfg.window}d.png",
                                 size=cfg.img_size)

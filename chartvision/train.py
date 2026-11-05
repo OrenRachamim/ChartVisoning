@@ -117,7 +117,7 @@ def train(samples: list[Sample], cfg: Config, device: torch.device | None = None
             loss.backward()
             opt.step()
             sched.step()
-            tot += float(loss)
+            tot += loss.item()
             for k in parts:
                 parts[k] += p[k]
         nb = len(train_loader)

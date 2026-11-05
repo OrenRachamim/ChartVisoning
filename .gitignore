@@ -3,5 +3,4 @@ __pycache__/
 data/raw/
 data/charts/
 data/predictions/*.png
-models/*.pt
 .venv/

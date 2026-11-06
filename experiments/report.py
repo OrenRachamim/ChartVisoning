@@ -147,6 +147,45 @@ def perstock_section() -> str:
     return "\n".join(out) + "\n" if out else "_not run_\n"
 
 
+def confidence_section() -> str:
+    out = []
+    for path in sorted(RESULTS.glob("confidence_*.json")):
+        r = load_json(path.stem)
+        rows, perm = [], []
+        for h, d in r["horizons"].items():
+            for row in d["table"]:
+                rows.append({"h": int(h), "top_q": row["top_q"], "n": row["n"], "hit_rate": row["hit_rate"],
+                             "acc_3class": row["acc_3class"], "mean_ls_pct": row["mean_ls_pct"], "t_stat": row["t_stat"]})
+            perm.append({"h": int(h), "top5_hit": d["top5_hit_rate"], "null_mean": d["null_mean"],
+                         "null_std": d["null_std"], "p_value": d["null_p_value"]})
+        df = pd.DataFrame(rows)
+        piv = df.pivot_table(index="top_q", columns="h", values="hit_rate").round(3).sort_index(ascending=False).reset_index()
+        piv.columns = ["top share of confident windows"] + [f"hit@{c}d" for c in piv.columns[1:]]
+        out.append(f"\n**{r['name']}** ({r['n']} חלונות מחוץ למדגם). שיעור פגיעה כיווני (0.5 = מטבע):\n\n" + md_table(piv))
+        piv2 = df.pivot_table(index="top_q", columns="h", values="t_stat").round(2).sort_index(ascending=False).reset_index()
+        piv2.columns = ["top share"] + [f"t@{c}d" for c in piv2.columns[1:]]
+        out.append("\nt-stat של תשואת long/short על החלונות הבטוחים:\n\n" + md_table(piv2))
+        out.append("\n5% הבטוחים ביותר מול null של ערבוב בתוך כל תאריך:\n\n" + md_table(pd.DataFrame(perm).round(3)))
+    return "\n".join(out) + "\n" if out else "_not run_\n"
+
+
+def relative_section() -> str:
+    rows = []
+    for path in sorted(RESULTS.glob("sweep_closerel_*.json")):
+        r = load_json(path.stem)
+        for h, m in r["summary"].items():
+            rows.append({"run": r["name"], "h": int(h), "acc": m["acc"], "logreg": m["logreg"], "momentum": m["momentum"],
+                         "ic": m["ic"], "spread_t": m["spread_t"]})
+    wf = load_json("walkforward_close_rel_base")
+    out = []
+    if rows:
+        out.append("**תת-מדגם (121 מניות):**\n\n" + md_table(pd.DataFrame(rows).round(3)))
+    if wf:
+        wrows = [{"h": int(h), **{k: m[k] for k in ("acc", "momentum", "ic", "spread_pct", "spread_t")}} for h, m in wf["pooled"].items()]
+        out.append("\n**אימות מתגלגל על כל היקום (3 קפלים, מאוחד):**\n\n" + md_table(pd.DataFrame(wrows).round(3)))
+    return "\n".join(out) + "\n" if out else "_not run_\n"
+
+
 def main() -> None:
     parts = [
         "# דו\"ח ניסויים – חיזוי סטטיסטי מגרפי MA\n",
@@ -161,6 +200,8 @@ def main() -> None:
         "## שלב 2 – אימות מתגלגל על כל היקום\n", walkforward_section(),
         "## שלב 3 – מודלים לפי סקטור\n", groups_section(),
         "## שלב 4 – מודל פר-מניה\n", perstock_section(),
+        "## בדיקה א' – דיוק מותנה בביטחון המודל\n", confidence_section(),
+        "## בדיקה ב' – תיוג יחסית לשוק (close_rel)\n", relative_section(),
     ]
     (ROOT / "experiments" / "REPORT.md").write_text("\n".join(parts), encoding="utf-8")
     print("wrote experiments/REPORT.md")

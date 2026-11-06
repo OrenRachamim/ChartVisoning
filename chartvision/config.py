@@ -34,7 +34,8 @@ class Config:
     model_width: int = 16           # channels of the first conv block (CPU friendly)
     channels: tuple[str, ...] = ("ma", "close")   # lines drawn, one per channel
     horizons: tuple[int, ...] = (5, 10)           # forecast horizons (days)
-    label_source: str = "ma"        # "ma" = movement of the chart line, "close" = tradable price
+    label_source: str = "ma"        # "ma" = movement of the chart line, "close" = tradable price,
+                                    # "close_rel" = price move minus the same-day mean of all stocks
     # |return| below this -> "flat". A float is a fixed threshold; "auto" uses
     # the train-set tertiles so the 3 classes are balanced for every horizon.
     flat_threshold: float | str = 0.01

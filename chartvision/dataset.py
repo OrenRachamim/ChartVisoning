@@ -56,7 +56,7 @@ def build_samples(frames: dict[str, pd.DataFrame], cfg: Config) -> list[Sample]:
         if ma_col not in df.columns or len(df) < cfg.window + max_h + 1:
             continue
         values = df[cols].to_numpy(dtype=np.float32)
-        label_src = df[ma_col if cfg.label_source == "ma" else "Close"].to_numpy(dtype=np.float32)
+        label_src = df[ma_col if cfg.label_source.startswith("ma") else "Close"].to_numpy(dtype=np.float32)
         ma = df[ma_col].to_numpy(dtype=np.float32)
         dates = df.index
 
@@ -70,7 +70,24 @@ def build_samples(frames: dict[str, pd.DataFrame], cfg: Config) -> list[Sample]:
             path = ma[end + 1 : end + 1 + cfg.path_horizon] / ma[end] - 1.0
             mom = float(ma[end] / ma[end - 5] - 1.0) if end >= 5 else 0.0
             samples.append(Sample(ticker, dates[end], window, rets, path.astype(np.float32), mom))
+    if cfg.label_source.endswith("_rel"):
+        demean_by_date(samples)
     return samples
+
+
+def demean_by_date(samples: list[Sample]) -> None:
+    """Market-neutral labels: subtract, per window end date and horizon, the
+    mean forward return of all stocks on that date. What is left is the stock's
+    move relative to the cross-section, which removes the common market noise."""
+    by_date: dict[pd.Timestamp, list[Sample]] = {}
+    for s in samples:
+        by_date.setdefault(s.end_date, []).append(s)
+    for group in by_date.values():
+        if len(group) < 5:
+            continue
+        mean = np.mean([s.future_returns for s in group], axis=0)
+        for s in group:
+            s.future_returns = (s.future_returns - mean).astype(np.float32)
 
 
 # --------------------------------------------------------------------------

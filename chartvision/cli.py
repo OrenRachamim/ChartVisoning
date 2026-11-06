@@ -27,8 +27,8 @@ def base_parser(description: str) -> argparse.ArgumentParser:
     p.add_argument("--channels", nargs="+", default=list(Config.channels), choices=["ma", "close"],
                    help="lines drawn in each image (ma = the --ma moving average)")
     p.add_argument("--horizons", nargs="+", type=int, default=list(Config.horizons))
-    p.add_argument("--label-source", default=Config.label_source, choices=["ma", "close"],
-                   help="what the up/flat/down label measures")
+    p.add_argument("--label-source", default=Config.label_source, choices=["ma", "close", "close_rel"],
+                   help="what the up/flat/down label measures (close_rel = relative to the market that day)")
     p.add_argument("--flat-threshold", default=Config.flat_threshold,
                    help="fixed |return| for the flat class, or 'auto' for train-set tertiles")
     p.add_argument("--path-horizon", type=int, default=Config.path_horizon)

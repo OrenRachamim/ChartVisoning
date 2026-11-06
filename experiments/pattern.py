@@ -79,6 +79,7 @@ def main(name: str = "close_rel_base", q: float = 0.05, horizons=(1, 2)) -> None
         ax.set_title(f"average price path before the call, horizon {h}d (top {q:.0%} confident)")
         ax.set_xlabel("days before the forecast"); ax.set_ylabel("% vs last close"); ax.grid(alpha=.3); ax.legend()
     fig.tight_layout(); fig.savefig(RESULTS / f"pattern_{name}.png"); print("saved", RESULTS / f"pattern_{name}.png")
+    import shutil; shutil.copy(RESULTS / f"pattern_{name}.png", ROOT / "experiments" / f"pattern_{name}{RESULTS.name.replace('results', '')}.png")
 
 
 if __name__ == "__main__":

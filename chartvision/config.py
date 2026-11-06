@@ -6,12 +6,18 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from pathlib import Path
 
+import os
+
 ROOT = Path(__file__).resolve().parent.parent
+# The "large" universe keeps the original folders; any other universe gets a
+# suffix so data, models and results never mix (see chartvision/universe.py).
+_U = os.environ.get("CHARTVISION_UNIVERSE", "large")
+_SUF = "" if _U == "large" else f"_{_U}"
 DATA_DIR = ROOT / "data"
-RAW_DIR = DATA_DIR / "raw"            # one CSV per ticker
-CHART_DIR = DATA_DIR / "charts"       # 500-day MA chart per ticker
-PRED_DIR = DATA_DIR / "predictions"   # charts with the forecast drawn on them
-MODEL_DIR = ROOT / "models"
+RAW_DIR = DATA_DIR / f"raw{_SUF}"            # one CSV per ticker
+CHART_DIR = DATA_DIR / f"charts{_SUF}"       # 500-day MA chart per ticker
+PRED_DIR = DATA_DIR / f"predictions{_SUF}"   # charts with the forecast drawn on them
+MODEL_DIR = ROOT / f"models{_SUF}"
 
 
 @dataclass

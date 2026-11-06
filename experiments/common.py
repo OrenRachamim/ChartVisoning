@@ -16,7 +16,9 @@ from chartvision.data import add_indicators, load_all  # noqa: E402
 from chartvision.dataset import build_samples  # noqa: E402
 from chartvision.universe import get_universe, sector_of  # noqa: E402
 
-RESULTS = ROOT / "experiments" / "results"
+from chartvision.universe import UNIVERSE_NAME  # noqa: E402
+
+RESULTS = ROOT / "experiments" / ("results" if UNIVERSE_NAME == "large" else f"results_{UNIVERSE_NAME}")
 RESULTS.mkdir(parents=True, exist_ok=True)
 
 SWEEP_HORIZONS = (1, 2, 3, 5, 10)

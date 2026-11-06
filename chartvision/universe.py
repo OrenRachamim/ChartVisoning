@@ -7,7 +7,15 @@ stocks, or take everything for a broad sample.
 
 from __future__ import annotations
 
-UNIVERSE: dict[str, list[str]] = {
+import csv
+import os
+from pathlib import Path
+
+# "large" = the embedded S&P 500-style list below; "small" = S&P SmallCap 600
+# constituents (chartvision/universes/sp600_smallcap.csv, from Wikipedia).
+UNIVERSE_NAME = os.environ.get("CHARTVISION_UNIVERSE", "large")
+
+LARGE_UNIVERSE: dict[str, list[str]] = {
     "Technology": [
         "AAPL", "MSFT", "NVDA", "AVGO", "ORCL", "CRM", "ADBE", "AMD", "CSCO", "ACN",
         "INTU", "IBM", "TXN", "QCOM", "NOW", "AMAT", "PANW", "ANET", "MU", "LRCX",
@@ -83,6 +91,21 @@ UNIVERSE: dict[str, list[str]] = {
         "MAA", "ESS", "ARE", "KIM", "DOC", "UDR", "HST", "REG", "CPT", "FRT",
     ],
 }
+
+
+def _load_csv_universe(path: Path) -> dict[str, list[str]]:
+    out: dict[str, list[str]] = {}
+    with open(path, newline="") as f:
+        for row in csv.DictReader(f):
+            out.setdefault(row["sector"], []).append(row["ticker"])
+    return out
+
+
+UNIVERSES: dict[str, dict[str, list[str]]] = {
+    "large": LARGE_UNIVERSE,
+    "small": _load_csv_universe(Path(__file__).parent / "universes" / "sp600_smallcap.csv"),
+}
+UNIVERSE = UNIVERSES[UNIVERSE_NAME]
 
 
 def get_universe(sectors: list[str] | None = None, max_tickers: int | None = None) -> list[str]:

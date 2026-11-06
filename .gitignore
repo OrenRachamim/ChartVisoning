@@ -9,3 +9,13 @@ experiments/results/perstock_*/
 experiments/results/*.log
 experiments/results/*.npz
 experiments/results/*.png
+data/raw_*/
+data/charts_*/
+data/predictions_*/*.png
+models_*/*.pt
+experiments/results_*/*.pt
+experiments/results_*/*.npz
+experiments/results_*/*.png
+experiments/results_*/*.log
+experiments/results_*/perstock_*/
+data/raw_small_excluded/

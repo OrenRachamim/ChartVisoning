@@ -1,0 +1,14 @@
+{
+  "small": {
+    "n": 565,
+    "median_price": 39.409488677978516,
+    "median_dollar_volume_musd": 27.38939563974142,
+    "p10_dollar_volume_musd": 9.863137215995788
+  },
+  "large": {
+    "n": 476,
+    "median_price": 138.20467376708984,
+    "median_dollar_volume_musd": 339.4191255310059,
+    "p10_dollar_volume_musd": 137.67503528308868
+  }
+}

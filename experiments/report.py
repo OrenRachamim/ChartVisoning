@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import pandas as pd
 
-from common import RESULTS, ROOT, load_json
+from common import RESULTS, ROOT, UNIVERSE_NAME, load_json
 
 H_SHOW = (1, 2, 3, 5, 10)
 
@@ -188,7 +188,7 @@ def relative_section() -> str:
 
 def main() -> None:
     parts = [
-        "# דו\"ח ניסויים – חיזוי סטטיסטי מגרפי MA\n",
+        "# דו\"ח ניסויים – חיזוי סטטיסטי מגרפי MA" + ("" if UNIVERSE_NAME == "large" else f" (יקום: {UNIVERSE_NAME})") + "\n",
         "נוצר אוטומטית מ-`experiments/results/*.json` על ידי `experiments/report.py`.\n",
         CONCLUSIONS,
         "## איך לקרוא את הטבלאות\n",
@@ -203,8 +203,9 @@ def main() -> None:
         "## בדיקה א' – דיוק מותנה בביטחון המודל\n", confidence_section(),
         "## בדיקה ב' – תיוג יחסית לשוק (close_rel)\n", relative_section(),
     ]
-    (ROOT / "experiments" / "REPORT.md").write_text("\n".join(parts), encoding="utf-8")
-    print("wrote experiments/REPORT.md")
+    out = ROOT / "experiments" / ("REPORT.md" if UNIVERSE_NAME == "large" else f"REPORT_{UNIVERSE_NAME}.md")
+    out.write_text("\n".join(parts), encoding="utf-8")
+    print(f"wrote {out.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

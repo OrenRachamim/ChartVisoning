@@ -87,7 +87,10 @@ precision של קריאות up/down, והבייסליינים.
 
 ## מחקר אופטימיזציה (experiments/)
 
-`experiments/PLAN.md` מתאר את התוכנית ו-`experiments/REPORT.md` את התוצאות.
+`experiments/PLAN.md` מתאר את התוכנית ו-`experiments/REPORT.md` את התוצאות והמסקנות.
+**בקצרה**: חיזוי תנועת ה-MA מצליח (0.76–0.83 ליום אחד) אבל זו האריתמטיקה של הממוצע הנע,
+לא מידע על השוק; חיזוי מחיר הסגירה נשאר ברמת ניחוש בכל קונפיגורציה, אופק, סקטור ומודל
+פר-מניה (476 מניות, 3 קפלים מתגלגלים).
 
 ```bash
 python experiments/run_all.py          # sweep -> walk-forward -> sectors -> per-stock -> report

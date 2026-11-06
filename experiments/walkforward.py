@@ -30,7 +30,7 @@ def pick_best(label: str, metric: str = "acc", horizons=(2, 3, 5, 10)) -> tuple[
 
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--labels", nargs="+", default=["ma", "close"])
+    p.add_argument("--labels", nargs="+", default=["close", "ma"])
     p.add_argument("--folds", type=int, default=3)
     p.add_argument("--epochs", type=int, default=6)
     p.add_argument("--metric", default="acc", help="sweep metric used to pick the config")

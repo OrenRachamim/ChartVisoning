@@ -81,10 +81,15 @@ def main() -> None:
             assign_labels(tr, thr, cfg.horizons)
             assign_labels(va, thr, cfg.horizons)
             ft_cfg = Config(**{**{k: getattr(cfg, k) for k in vars(cfg)}, "batch_size": 64, "num_workers": 0})
-            model_t, _ = fit(tr, [], ft_cfg, device, init_state=gen_state, lr=args.ft_lr,
-                             epochs=args.ft_epochs, select_on="last", verbose=False)
-            torch.save({"state_dict": {k: v.cpu() for k, v in model_t.state_dict().items()}, "config": cfg_dict(cfg),
-                        "thresholds": ck["thresholds"], "cutoff": ck["cutoff"]}, out_dir / f"{t}.pt")
+            ck_t = out_dir / f"{t}.pt"
+            if ck_t.exists():   # resume: reuse an already fine-tuned copy
+                model_t = ChartCNN(len(cfg.channels), len(cfg.horizons), cfg.path_horizon, width=cfg.model_width).to(device)
+                model_t.load_state_dict(torch.load(ck_t, map_location=device, weights_only=False)["state_dict"])
+            else:
+                model_t, _ = fit(tr, [], ft_cfg, device, init_state=gen_state, lr=args.ft_lr,
+                                 epochs=args.ft_epochs, select_on="last", verbose=False)
+                torch.save({"state_dict": {k: v.cpu() for k, v in model_t.state_dict().items()}, "config": cfg_dict(cfg),
+                            "thresholds": ck["thresholds"], "cutoff": ck["cutoff"]}, ck_t)
 
             o_g = predict_samples(general, va, ft_cfg, device)
             o_t = predict_samples(model_t, va, ft_cfg, device)

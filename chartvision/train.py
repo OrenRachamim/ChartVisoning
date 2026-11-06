@@ -242,18 +242,34 @@ def train(samples: list[Sample], cfg: Config, device: torch.device | None = None
 
 
 def walk_forward(samples: list[Sample], cfg: Config, n_folds: int = 3, device=None,
-                 with_logreg: bool = True, verbose: bool = False) -> dict:
+                 with_logreg: bool = True, verbose: bool = False,
+                 cache_dir: Path | None = None, name: str = "wf") -> dict:
     """Expanding-window CV. Returns per-fold compact tables and the pooled
-    metrics over all out-of-sample windows."""
+    metrics over all out-of-sample windows. With ``cache_dir`` every finished
+    fold is saved and reused on a later call (resumable)."""
     device = device or get_device()
     folds = walk_forward_folds(samples, n_folds)
     fold_reports, pooled = [], []
+    keys = ["pred", "score", "labels", "returns", "dates", "momentum"]
     for k, (cutoff, end) in enumerate(folds):
+        cache = cache_dir / f"{name}_fold{k + 1}.npz" if cache_dir else None
+        if cache is not None and cache.exists():
+            z = np.load(cache, allow_pickle=True)
+            out = {key: z[key] for key in keys}
+            thr = {int(h): tuple(t) for h, t in json.loads(str(z["thr"])).items()}
+            summary = json.loads(str(z["summary"]))
+            log.info("fold %d loaded from cache", k + 1)
+            fold_reports.append({"cutoff": str(cutoff.date()), "summary": summary, "n": int(len(out["labels"]))})
+            pooled.append((out, thr))
+            continue
         _, report, out, thr = run_split(samples, cfg, cutoff, end, device, with_logreg, "last", verbose)
         log.info("fold %d (%s -> %s): %s", k + 1, cutoff.date(), end.date() if end is not None else "end",
                  json.dumps(compact(report), default=str))
         fold_reports.append({"cutoff": str(cutoff.date()), "summary": compact(report), "n": report["n"]})
         pooled.append((out, thr))
+        if cache is not None:
+            np.savez(cache, **{key: out[key] for key in keys}, thr=json.dumps({h: list(t) for h, t in thr.items()}),
+                     summary=json.dumps(compact(report), default=str))
     # pool out-of-sample predictions (thresholds differ slightly per fold; labels were set per fold)
     keys = ["pred", "score", "labels", "returns", "dates", "momentum"]
     merged = {k: np.concatenate([o[k] for o, _ in pooled]) for k in keys}

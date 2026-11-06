@@ -32,7 +32,7 @@ def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--labels", nargs="+", default=["close", "ma"])
     p.add_argument("--folds", type=int, default=3)
-    p.add_argument("--epochs", type=int, default=6)
+    p.add_argument("--epochs", type=int, default=5)
     p.add_argument("--metric", default="acc", help="sweep metric used to pick the config")
     p.add_argument("--overrides", default=None, help="JSON dict to force a config instead of the sweep's best")
     args = p.parse_args()
@@ -56,7 +56,8 @@ def main() -> None:
         t0 = time.time()
         samples, frames = samples_for(cfg)
         log.info("=== walk-forward %s: %s  (%d windows, %d stocks)", name, ov, len(samples), len(frames))
-        res = walk_forward(samples, cfg, n_folds=args.folds, device=device, verbose=True)
+        res = walk_forward(samples, cfg, n_folds=args.folds, device=device, verbose=True,
+                           cache_dir=RESULTS, name=f"wf_{name}")
         payload = {"name": name, "overrides": ov, "config": cfg_dict(cfg), "n_stocks": len(frames),
                    "n_windows": len(samples), "minutes": (time.time() - t0) / 60, **res}
         save_json(f"walkforward_{name}", payload)

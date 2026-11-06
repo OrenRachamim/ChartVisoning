@@ -85,6 +85,31 @@ precision של קריאות up/down, והבייסליינים.
 | 5 ימים | 0.673 | 0.380 | 0.557 | 0.689 | 0.780 |
 | 10 ימים | 0.593 | 0.449 | 0.482 | 0.680 | 0.717 |
 
+## מחקר אופטימיזציה (experiments/)
+
+`experiments/PLAN.md` מתאר את התוכנית ו-`experiments/REPORT.md` את התוצאות.
+
+```bash
+python experiments/run_all.py          # sweep -> walk-forward -> sectors -> per-stock -> report
+python experiments/sweep.py --labels close --only base win30 img32   # חלק מהסריקה בלבד
+python experiments/report.py           # בניית הדו"ח מחדש
+```
+
+| שלב | סקריפט | מה נבדק |
+|-----|--------|---------|
+| 1 | `sweep.py` | אופק (1/2/3/5/10 ימים), תיוג לפי MA או מחיר, MA5/10/20, ערוצים, חלון 30/60/120, תמונה 32/48/64, רוחב מודל |
+| 2 | `walkforward.py` | הקונפיגורציה הטובה של כל תיוג על כל היקום ב-3 קפלים מתגלגלים |
+| 3 | `groups.py` | מודל כללי מול מודל לסקטור מול כללי+fine-tune לסקטור |
+| 4 | `perstock.py` | מודל כללי מול מודל שכוונן על המניה עצמה מול ensemble (משקל 0.3/0.5/0.7) |
+
+כל שלב resumable (תוצאות שנשמרו ב-`experiments/results/` לא מחושבות שוב).
+המודלים הפרטניים נשמרים ל-`experiments/results/perstock_<label>/<TICKER>.pt`
+ואפשר לשלב אותם בחיזוי:
+
+```bash
+python scripts/4_predict.py --per-stock-dir experiments/results/perstock_close --ensemble-weight 0.5
+```
+
 ## הערות מתודולוגיות
 
 * MA10 הוא קו מוחלק, ולכן כיוון ה‑5 ימים הבאים שלו תלוי חזק בשיפוע הנוכחי.

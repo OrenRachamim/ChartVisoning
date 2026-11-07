@@ -91,6 +91,13 @@ precision של קריאות up/down, והבייסליינים.
 **בקצרה**: חיזוי תנועת ה-MA מצליח (0.76–0.83 ליום אחד) אבל זו האריתמטיקה של הממוצע הנע,
 לא מידע על השוק; חיזוי מחיר הסגירה נשאר ברמת ניחוש בכל קונפיגורציה, אופק, סקטור ומודל
 פר-מניה (476 מניות, 3 קפלים מתגלגלים).
+אותו מחקר על 565 מניות קטנות (S&P SmallCap 600, `CHARTVISION_UNIVERSE=small`) נתן תוצאה זהה:
+`experiments/REPORT_small.md`.
+
+```bash
+CHARTVISION_UNIVERSE=small python scripts/1_download.py --max-tickers 700   # נתונים ל-data/raw_small
+CHARTVISION_UNIVERSE=small python experiments/run_all.py                    # תוצאות ל-experiments/results_small
+```
 
 ```bash
 python experiments/run_all.py          # sweep -> walk-forward -> sectors -> per-stock -> report

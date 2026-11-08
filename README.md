@@ -85,6 +85,11 @@ precision של קריאות up/down, והבייסליינים.
 | 5 ימים | 0.673 | 0.380 | 0.557 | 0.689 | 0.780 |
 | 10 ימים | 0.593 | 0.449 | 0.482 | 0.680 | 0.717 |
 
+## מחקר Fear & Greed (sentiment/)
+
+האם רמת המדד או צורת הגרף שלו חוזות את כיוון השוק: `sentiment/REPORT.md`.
+הרצה: `python sentiment/build_data.py && python sentiment/run_study.py && python sentiment/report.py`.
+
 ## מחקר אופטימיזציה (experiments/)
 
 `experiments/PLAN.md` מתאר את התוכנית ו-`experiments/REPORT.md` את התוצאות והמסקנות.

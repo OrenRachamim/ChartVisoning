@@ -1,0 +1,34 @@
+sentiment start Sun Nov  8 20:26:13 UTC 2026
+20:26:15 === fg_reconstructed_spx: 4658 days 2008-05-05 -> 2026-11-06
+20:26:15 buckets:
+       bucket  n_days  ret_5_pct    t_5  ret_21_pct   t_21  ret_63_pct   t_63
+ extreme fear     781      0.171 -0.056       1.177  0.481       2.124 -0.141
+         fear    1000      0.217  0.242       0.471 -0.685       1.910 -0.377
+      neutral     704      0.215  0.238       0.602 -0.437       2.229 -0.228
+        greed    1500      0.169 -0.217       0.900  0.364       3.029  0.987
+extreme greed     610      0.165 -0.191       0.682 -0.292       2.264 -0.137
+20:26:16 IC (HAC t):
+            feature   ic_5    t_5  ic_21   t_21  ic_63   t_63
+              level -0.059 -2.200 -0.059 -1.215 -0.003 -0.038
+             chg_5d -0.035 -1.560 -0.019 -0.674 -0.033 -1.264
+            chg_10d -0.028 -1.138 -0.020 -0.548 -0.031 -0.893
+            chg_20d -0.024 -0.935 -0.020 -0.473 -0.032 -0.759
+            min_20d -0.052 -1.908 -0.048 -0.936  0.015  0.184
+            max_20d -0.024 -0.882 -0.022 -0.432  0.035  0.414
+        above_min20 -0.024 -0.991 -0.035 -0.899 -0.050 -1.254
+        below_max20  0.036  1.427  0.014  0.339  0.029  0.672
+              z_60d -0.055 -2.121 -0.083 -1.821 -0.088 -1.695
+          slope_10d -0.024 -0.961 -0.015 -0.436 -0.029 -0.891
+  rebound_from_fear  0.008  0.334 -0.014 -0.337 -0.034 -0.618
+rollover_from_greed  0.039  1.620  0.050  1.241  0.044  0.783
+    days_since_fear -0.038 -1.335 -0.051 -0.977  0.026  0.330
+   days_since_greed  0.015  0.561  0.014  0.262 -0.020 -0.232
+20:26:16 event into_extreme_fear    n= 50  21d +0.78% (hit 0.70)  63d +1.91% (hit 0.66)  CI63 [-0.84, +4.23]
+20:26:16 event into_fear            n= 58  21d +0.75% (hit 0.64)  63d +2.08% (hit 0.66)  CI63 [-0.55, +4.50]
+20:26:16 event into_extreme_greed   n= 41  21d +1.03% (hit 0.63)  63d +2.04% (hit 0.78)  CI63 [-0.29, +3.98]
+20:26:16 event into_greed           n= 60  21d +1.16% (hit 0.72)  63d +3.18% (hit 0.82)  CI63 [+1.52, +4.77]
+20:26:16 fear-minus-greed 21d: observed +0.50%, null +0.08±0.93%, p=0.327
+20:26:17 strategy long_in_fear_lt25              CAGR   3.08% Sharpe  0.21 DD  -34.5% (B&H Sharpe 0.45) expo 0.17  random-timing p=0.51
+20:26:17 strategy long_unless_greed_gt75         CAGR   9.41% Sharpe  0.47 DD  -52.6% (B&H Sharpe 0.45) expo 0.87  random-timing p=0.32
+20:26:17 strategy long_after_rebound_from_fear   CAGR   2.09% Sharpe  0.22 DD  -30.0% (B&H Sharpe 0.45) expo 0.24  random-timing p=0.54
+20:26:17 strategy long_when_rising_5d            CAGR   4.02% Sharpe  0.33 DD  -22.7% (B&H Sharpe 0.45) expo 0.49  random-timing p=0.47

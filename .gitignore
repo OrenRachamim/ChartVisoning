@@ -19,3 +19,5 @@ experiments/results_*/*.png
 experiments/results_*/*.log
 experiments/results_*/perstock_*/
 data/raw_small_excluded/
+data/sentiment/universe_*.csv
+data/sentiment/market.csv

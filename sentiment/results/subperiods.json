@@ -1,0 +1,92 @@
+[
+  {
+    "index": "S&P 500",
+    "period": "1990-2001",
+    "extreme_fear_21d_pct": 1.95,
+    "t_fear": 2.02,
+    "extreme_greed_21d_pct": -0.35,
+    "t_greed": -3.48,
+    "base_21d_pct": 0.93,
+    "t_greed_5d": -3.81
+  },
+  {
+    "index": "S&P 500",
+    "period": "2002-2012",
+    "extreme_fear_21d_pct": -0.86,
+    "t_fear": -1.06,
+    "extreme_greed_21d_pct": 0.17,
+    "t_greed": -0.03,
+    "base_21d_pct": 0.18,
+    "t_greed_5d": -0.68
+  },
+  {
+    "index": "S&P 500",
+    "period": "2013-2026",
+    "extreme_fear_21d_pct": 2.16,
+    "t_fear": 2.07,
+    "extreme_greed_21d_pct": 0.89,
+    "t_greed": -0.42,
+    "base_21d_pct": 1.01,
+    "t_greed_5d": -0.43
+  },
+  {
+    "index": "Nasdaq",
+    "period": "1990-2001",
+    "extreme_fear_21d_pct": 2.02,
+    "t_fear": 0.99,
+    "extreme_greed_21d_pct": -0.32,
+    "t_greed": -2.0,
+    "base_21d_pct": 1.16,
+    "t_greed_5d": -2.09
+  },
+  {
+    "index": "Nasdaq",
+    "period": "2002-2012",
+    "extreme_fear_21d_pct": -0.4,
+    "t_fear": -0.67,
+    "extreme_greed_21d_pct": 0.04,
+    "t_greed": -0.63,
+    "base_21d_pct": 0.34,
+    "t_greed_5d": -0.73
+  },
+  {
+    "index": "Nasdaq",
+    "period": "2013-2026",
+    "extreme_fear_21d_pct": 2.69,
+    "t_fear": 2.01,
+    "extreme_greed_21d_pct": 1.38,
+    "t_greed": 0.2,
+    "base_21d_pct": 1.31,
+    "t_greed_5d": -0.12
+  },
+  {
+    "index": "Russell 2000",
+    "period": "1990-2001",
+    "extreme_fear_21d_pct": 1.2,
+    "t_fear": 0.4,
+    "extreme_greed_21d_pct": -0.14,
+    "t_greed": -2.14,
+    "base_21d_pct": 0.92,
+    "t_greed_5d": -1.74
+  },
+  {
+    "index": "Russell 2000",
+    "period": "2002-2012",
+    "extreme_fear_21d_pct": -1.34,
+    "t_fear": -1.41,
+    "extreme_greed_21d_pct": 0.73,
+    "t_greed": 0.68,
+    "base_21d_pct": 0.42,
+    "t_greed_5d": -0.04
+  },
+  {
+    "index": "Russell 2000",
+    "period": "2013-2026",
+    "extreme_fear_21d_pct": 2.48,
+    "t_fear": 2.21,
+    "extreme_greed_21d_pct": 0.36,
+    "t_greed": -0.9,
+    "base_21d_pct": 0.75,
+    "t_greed_5d": -1.3
+  }
+]

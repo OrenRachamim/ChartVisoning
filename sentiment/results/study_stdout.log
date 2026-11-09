@@ -114,3 +114,118 @@ rollover_from_greed  0.013  0.778 -0.020 -0.688 -0.039 -0.928
 21:14:50 model cnn_index_plus_price       5d acc 0.517(base 0.576) ic +0.010 t+0.5  21d acc 0.524(base 0.637) ic -0.019 t-0.5  63d acc 0.582(base 0.678) ic +0.081 t+1.5
 21:14:50 model cnn_shuffled_labels_null   5d acc 0.515(base 0.575) ic -0.021 t-1.8  21d acc 0.558(base 0.640) ic +0.005 t+0.4  63d acc 0.641(base 0.701) ic -0.010 t-0.9
 sentiment finished Sun Nov  8 21:14:51 UTC 2026
+22:13:23 === vix_nasdaq: 9032 days 1990-12-26 -> 2026-11-06
+22:13:23 buckets:
+       bucket  n_days  ret_5_pct    t_5  ret_21_pct   t_21  ret_63_pct   t_63
+ extreme fear    2405      0.400  1.108       1.681  1.313       5.103  1.641
+         fear    1436      0.239  0.009       1.272  0.618       2.324 -0.430
+      neutral     693      0.312  0.417       0.953 -0.074       2.881 -0.023
+        greed    1433      0.288  0.440       0.903 -0.190       2.840 -0.054
+extreme greed    3002      0.067 -2.328       0.379 -2.020       1.472 -1.421
+22:13:23 IC (HAC t):
+            feature   ic_5    t_5  ic_21   t_21  ic_63   t_63
+              level -0.078 -4.143 -0.114 -3.108 -0.144 -2.601
+             chg_5d -0.038 -2.436 -0.002 -0.126 -0.008 -0.522
+            chg_10d -0.033 -1.934 -0.006 -0.257 -0.010 -0.451
+            chg_20d -0.008 -0.445 -0.006 -0.198 -0.023 -0.688
+            min_20d -0.064 -3.252 -0.091 -2.398 -0.104 -1.785
+            max_20d -0.059 -3.046 -0.107 -2.760 -0.145 -2.396
+        above_min20 -0.036 -2.014 -0.050 -1.684 -0.089 -2.321
+        below_max20  0.031  1.750  0.001  0.025  0.002  0.049
+              z_60d -0.021 -1.100 -0.006 -0.187 -0.033 -0.747
+          slope_10d -0.052 -3.037 -0.014 -0.669 -0.010 -0.529
+  rebound_from_fear  0.004  0.218  0.022  0.722 -0.014 -0.317
+rollover_from_greed  0.017  0.981 -0.004 -0.144 -0.025 -0.573
+    days_since_fear -0.049 -2.494 -0.072 -1.865 -0.096 -1.614
+   days_since_greed  0.056  2.969  0.098  2.633  0.111  1.850
+22:13:24 event into_extreme_fear    n=111  21d +0.65% (hit 0.61)  63d +2.46% (hit 0.65)  CI63 [+0.20, +4.57]
+22:13:24 event into_fear            n=113  21d +1.22% (hit 0.65)  63d +2.66% (hit 0.66)  CI63 [+0.53, +4.77]
+22:13:24 event into_extreme_greed   n=136  21d +0.78% (hit 0.67)  63d +1.94% (hit 0.70)  CI63 [+0.15, +3.71]
+22:13:24 event into_greed           n=144  21d +0.92% (hit 0.68)  63d +2.15% (hit 0.69)  CI63 [+0.34, +3.85]
+22:13:25 fear-minus-greed 21d: observed +1.32%, null -0.04±0.63%, p=0.017
+22:13:25 strategy long_in_fear_lt25              CAGR   4.88% Sharpe  0.29 DD  -49.1% (B&H Sharpe 0.50) expo 0.27  random-timing p=0.50
+22:13:25 strategy long_unless_greed_gt75         CAGR  10.62% Sharpe  0.47 DD  -64.6% (B&H Sharpe 0.50) expo 0.66  random-timing p=0.34
+22:13:25 strategy long_after_rebound_from_fear   CAGR   2.20% Sharpe  0.19 DD  -63.2% (B&H Sharpe 0.50) expo 0.27  random-timing p=0.75
+22:13:25 strategy long_when_rising_5d            CAGR   7.01% Sharpe  0.44 DD  -70.2% (B&H Sharpe 0.50) expo 0.52  random-timing p=0.25
+22:47:51 model logit_level_only           5d acc 0.575(base 0.575) ic +0.054 t+2.4  21d acc 0.626(base 0.626) ic +0.042 t+0.9  63d acc 0.677(base 0.677) ic -0.074 t-1.0
+22:47:51 model logit_shape_features       5d acc 0.561(base 0.575) ic -0.006 t-0.3  21d acc 0.603(base 0.626) ic -0.080 t-2.0  63d acc 0.656(base 0.677) ic -0.194 t-2.7
+22:47:51 model cnn_index_chart            5d acc 0.514(base 0.575) ic +0.023 t+1.2  21d acc 0.515(base 0.626) ic -0.028 t-0.7  63d acc 0.540(base 0.677) ic -0.048 t-0.8
+22:47:51 model cnn_index_plus_price       5d acc 0.512(base 0.575) ic +0.021 t+1.1  21d acc 0.524(base 0.626) ic +0.036 t+1.0  63d acc 0.559(base 0.677) ic -0.002 t-0.0
+22:47:51 model cnn_shuffled_labels_null   5d acc 0.539(base 0.574) ic +0.006 t+0.5  21d acc 0.587(base 0.632) ic +0.010 t+0.9  63d acc 0.630(base 0.683) ic -0.019 t-1.7
+22:47:55 === vix_russell: 9032 days 1990-12-26 -> 2026-11-06
+22:47:55 buckets:
+       bucket  n_days  ret_5_pct    t_5  ret_21_pct   t_21  ret_63_pct   t_63
+ extreme fear    2405      0.185  0.066       0.993  0.485       3.768  1.418
+         fear    1436      0.234  0.490       0.991  0.714       1.637 -0.360
+      neutral     693      0.373  1.340       0.831  0.172       1.662 -0.389
+        greed    1433      0.269  0.916       0.762  0.065       1.459 -0.660
+extreme greed    3002      0.049 -1.784       0.373 -1.338       1.351 -0.941
+22:47:55 IC (HAC t):
+            feature   ic_5    t_5  ic_21   t_21  ic_63   t_63
+              level -0.060 -3.118 -0.090 -2.476 -0.104 -1.899
+             chg_5d -0.040 -2.581 -0.001 -0.083 -0.008 -0.593
+            chg_10d -0.029 -1.696 -0.001 -0.057 -0.012 -0.560
+            chg_20d -0.007 -0.422 -0.007 -0.230 -0.023 -0.754
+            min_20d -0.050 -2.559 -0.070 -1.887 -0.065 -1.130
+            max_20d -0.044 -2.253 -0.086 -2.278 -0.097 -1.584
+        above_min20 -0.031 -1.743 -0.041 -1.382 -0.082 -2.252
+        below_max20  0.031  1.753 -0.002 -0.073 -0.010 -0.262
+              z_60d -0.023 -1.201 -0.015 -0.453 -0.045 -1.127
+          slope_10d -0.047 -2.719 -0.010 -0.442 -0.012 -0.660
+  rebound_from_fear  0.010  0.557 -0.003 -0.109 -0.056 -1.366
+rollover_from_greed  0.018  1.018 -0.009 -0.307 -0.014 -0.313
+    days_since_fear -0.024 -1.189 -0.038 -1.003 -0.045 -0.773
+   days_since_greed  0.050  2.636  0.080  2.136  0.052  0.846
+22:47:55 event into_extreme_fear    n=111  21d +0.33% (hit 0.62)  63d +1.69% (hit 0.59)  CI63 [-0.35, +3.70]
+22:47:55 event into_fear            n=113  21d +0.49% (hit 0.62)  63d +1.37% (hit 0.59)  CI63 [-0.64, +3.35]
+22:47:55 event into_extreme_greed   n=136  21d +0.44% (hit 0.61)  63d +1.25% (hit 0.65)  CI63 [-0.42, +2.82]
+22:47:55 event into_greed           n=144  21d +0.41% (hit 0.62)  63d +1.10% (hit 0.63)  CI63 [-0.58, +2.61]
+22:47:56 fear-minus-greed 21d: observed +0.67%, null -0.03±0.59%, p=0.123
+22:47:57 strategy long_in_fear_lt25              CAGR   2.08% Sharpe  0.13 DD  -61.9% (B&H Sharpe 0.39) expo 0.27  random-timing p=0.77
+22:47:57 strategy long_unless_greed_gt75         CAGR   8.02% Sharpe  0.38 DD  -59.9% (B&H Sharpe 0.39) expo 0.66  random-timing p=0.29
+22:47:57 strategy long_after_rebound_from_fear   CAGR   3.23% Sharpe  0.31 DD  -34.7% (B&H Sharpe 0.39) expo 0.27  random-timing p=0.26
+22:47:57 strategy long_when_rising_5d            CAGR   5.53% Sharpe  0.36 DD  -54.1% (B&H Sharpe 0.39) expo 0.52  random-timing p=0.24
+23:22:56 model logit_level_only           5d acc 0.551(base 0.551) ic +0.011 t+0.5  21d acc 0.593(base 0.593) ic -0.022 t-0.5  63d acc 0.615(base 0.615) ic -0.223 t-3.3
+23:22:56 model logit_shape_features       5d acc 0.546(base 0.551) ic -0.022 t-1.2  21d acc 0.586(base 0.593) ic -0.110 t-2.9  63d acc 0.585(base 0.615) ic -0.143 t-2.3
+23:22:56 model cnn_index_chart            5d acc 0.511(base 0.551) ic +0.024 t+1.3  21d acc 0.476(base 0.593) ic -0.092 t-2.6  63d acc 0.502(base 0.615) ic -0.121 t-1.9
+23:22:56 model cnn_index_plus_price       5d acc 0.507(base 0.551) ic +0.002 t+0.1  21d acc 0.516(base 0.593) ic +0.005 t+0.1  63d acc 0.494(base 0.615) ic -0.064 t-1.1
+23:22:56 model cnn_shuffled_labels_null   5d acc 0.530(base 0.562) ic -0.003 t-0.2  21d acc 0.558(base 0.606) ic +0.000 t+0.0  63d acc 0.591(base 0.628) ic +0.028 t+2.4
+23:23:01 === vxn_nasdaq: 6238 days 2002-01-24 -> 2026-11-06
+23:23:01 buckets:
+       bucket  n_days  ret_5_pct    t_5  ret_21_pct   t_21  ret_63_pct   t_63
+ extreme fear    1493      0.238  0.138       1.200  0.464       4.265  0.875
+         fear    1003      0.202 -0.067       0.850 -0.115       1.313 -0.959
+      neutral     456      0.392  1.106       0.490 -0.677       3.220  0.532
+        greed    1042      0.196 -0.144       0.851 -0.127       2.681 -0.043
+extreme greed    2181      0.171 -0.498       0.840 -0.193       2.245 -0.462
+23:23:01 IC (HAC t):
+            feature   ic_5    t_5  ic_21   t_21  ic_63   t_63
+              level -0.047 -2.009 -0.056 -1.199 -0.094 -1.256
+             chg_5d -0.029 -1.584  0.021  1.026 -0.002 -0.114
+            chg_10d -0.013 -0.640  0.027  0.926  0.008  0.307
+            chg_20d  0.020  0.944  0.019  0.552  0.008  0.201
+            min_20d -0.034 -1.427 -0.042 -0.889 -0.047 -0.598
+            max_20d -0.039 -1.615 -0.078 -1.593 -0.112 -1.383
+        above_min20 -0.022 -1.039 -0.025 -0.707 -0.073 -1.588
+        below_max20 -0.001 -0.055 -0.045 -1.223 -0.029 -0.641
+              z_60d  0.002  0.072  0.038  0.955  0.018  0.359
+          slope_10d -0.026 -1.282  0.020  0.766  0.002  0.099
+  rebound_from_fear -0.004 -0.199 -0.019 -0.538 -0.056 -1.118
+rollover_from_greed -0.001 -0.062  0.000  0.001 -0.032 -0.619
+    days_since_fear -0.009 -0.361 -0.005 -0.106 -0.024 -0.311
+   days_since_greed  0.029  1.246  0.030  0.646  0.058  0.738
+23:23:01 event into_extreme_fear    n= 70  21d +0.24% (hit 0.56)  63d +1.64% (hit 0.67)  CI63 [-0.78, +4.07]
+23:23:01 event into_fear            n= 76  21d +0.02% (hit 0.59)  63d +0.86% (hit 0.62)  CI63 [-1.43, +3.09]
+23:23:01 event into_extreme_greed   n= 81  21d +0.55% (hit 0.68)  63d +2.42% (hit 0.69)  CI63 [+0.66, +4.03]
+23:23:01 event into_greed           n= 83  21d +1.05% (hit 0.67)  63d +3.21% (hit 0.71)  CI63 [+1.29, +4.95]
+23:23:02 fear-minus-greed 21d: observed +0.36%, null +0.01±0.75%, p=0.313
+23:23:03 strategy long_in_fear_lt25              CAGR   3.66% Sharpe  0.22 DD  -54.5% (B&H Sharpe 0.46) expo 0.24  random-timing p=0.51
+23:23:03 strategy long_unless_greed_gt75         CAGR   7.15% Sharpe  0.34 DD  -55.6% (B&H Sharpe 0.46) expo 0.65  random-timing p=0.60
+23:23:03 strategy long_after_rebound_from_fear   CAGR   0.38% Sharpe  0.04 DD  -35.4% (B&H Sharpe 0.46) expo 0.25  random-timing p=0.89
+23:23:03 strategy long_when_rising_5d            CAGR   5.21% Sharpe  0.35 DD  -55.8% (B&H Sharpe 0.46) expo 0.52  random-timing p=0.51
+23:41:20 model logit_level_only           5d acc 0.583(base 0.588) ic +0.004 t+0.2  21d acc 0.654(base 0.654) ic -0.068 t-1.3  63d acc 0.715(base 0.715) ic -0.170 t-1.8
+23:41:20 model logit_shape_features       5d acc 0.564(base 0.588) ic -0.004 t-0.2  21d acc 0.623(base 0.654) ic -0.051 t-1.1  63d acc 0.639(base 0.715) ic -0.253 t-3.0
+23:41:20 model cnn_index_chart            5d acc 0.507(base 0.588) ic -0.001 t-0.0  21d acc 0.536(base 0.654) ic +0.004 t+0.1  63d acc 0.566(base 0.715) ic +0.009 t+0.1
+23:41:20 model cnn_index_plus_price       5d acc 0.520(base 0.588) ic +0.047 t+2.1  21d acc 0.537(base 0.654) ic +0.068 t+1.7  63d acc 0.622(base 0.715) ic +0.114 t+1.9
+23:41:20 model cnn_shuffled_labels_null   5d acc 0.534(base 0.580) ic -0.001 t-0.1  21d acc 0.579(base 0.639) ic -0.007 t-0.5  63d acc 0.649(base 0.702) ic +0.000 t+0.0
+sentiment2 finished Sun Nov  8 23:41:24 UTC 2026

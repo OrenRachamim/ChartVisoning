@@ -9,6 +9,10 @@ ROOT = Path(__file__).resolve().parent.parent
 RES = ROOT / "sentiment" / "results"
 STUDIES = [("fg_reconstructed_spx", "Fear & Greed משוחזר מול S&P 500 (2008–2026)"),
            ("vix_spx", "VIX (כציון 0–100, 100 = שאננות) מול S&P 500 (1990–2026)"),
+           ("vix_nasdaq", "VIX מול נאסד\"ק (Composite, 1990–2026)"),
+           ("vix_russell", "VIX מול Russell 2000 (1990–2026)"),
+           ("vxn_nasdaq", "VXN (התנודתיות הגלומה של נאסד\"ק 100) מול נאסד\"ק"),
+           ("rvx_russell", "RVX (התנודתיות הגלומה של Russell 2000) מול Russell 2000"),
            ("crypto_fg_btc", "Crypto Fear & Greed מול ביטקוין (2018–2026)"),
            ("cnn_fg_real_1y_spx", "Fear & Greed האמיתי של CNN, 250 הימים הזמינים (תיאורי בלבד)")]
 
@@ -40,6 +44,16 @@ rebound מפחד, rollover מחמדנות, ימים מאז פחד…) אינם �
 רכיב Put/Call ומשתמש ביקום מניות עדכני (הטיית שורדות ברוחב). סדרה אחת מול יעד אחד = מעט תצפיות
 בלתי-תלויות (18 שנים ≈ 72 רבעונים), ולכן t של 2 כאן חלש מ-t של 2 במחקר החתך-רוחבי. תקופת
 2008–2026 היא בעיקר שוק עולה.
+
+
+**6. נאסד"ק ו-Russell 2000 (VIX מול שניהם, 1990–2026), והמבחן לפי תת-תקופה.** הסימן זהה בשלושת
+המדדים: שאננות קיצונית ⇒ תשואת שבוע וחודש נמוכות (נאסד"ק: 21 יום +0.38% מול +1.0% בסיס, t −2.0;
+Russell: +0.37% מול +0.81%, t −1.3), פחד קיצוני ⇒ גבוהות (נאסד"ק +1.68%, Russell +0.99%). פחד פחות
+חמדנות ב-21 יום: נאסד"ק +1.3% (p 0.02), Russell +0.7% (p 0.12). VXN (התנודתיות של נאסד"ק עצמו,
+2002–2026) לא מראה אפקט בכלל. **פירוק לתקופות חושף שהאפקט אינו יציב**: אפקט "החמדנות" (שאננות ⇒
+תשואה נמוכה) נמצא כולו ב-1990–2001 (t −3.5 ב-S&P) ונעלם אחרי 2002 (t בין −0.9 ל-+0.7); אפקט "הפחד"
+נמצא ב-1990–2001 וב-2013–2026 (t ≈ +2) אבל התהפך ב-2002–2012 (פחד קיצוני ⇒ −0.9% ב-S&P, −1.3%
+ב-Russell: ב-2008 הפחד הקדים ירידות נוספות). בשום מדד אסטרטגיית long/flat לא עברה buy & hold.
 
 **שורה תחתונה**: Fear & Greed ודומיו הם מדדי משטר תנודתיות. הם אומרים משהו על התשואה הצפויה
 (פחות כשהכול רגוע, יותר אחרי פאניקה), בעיקר ל-1 עד 4 שבועות, אבל לא על הכיוון ביום-יומיים,
@@ -95,6 +109,15 @@ def section(name: str, title: str) -> str:
     return "\n".join(s) + "\n"
 
 
+def subperiods() -> str:
+    p = RES / "subperiods.json"
+    if not p.exists():
+        return ""
+    df = pd.DataFrame(json.load(open(p)))
+    df.columns = ["מדד", "תקופה", "פחד קיצוני 21d %", "t", "חמדנות קיצונית 21d %", "t", "בסיס 21d %", "t חמדנות 5d"]
+    return "## יציבות אפקט ה-VIX לאורך זמן (21 יום, לפי תת-תקופה)\n\n" + md(df) + "\n"
+
+
 def components() -> str:
     p = RES / "components.json"
     if not p.exists():
@@ -122,7 +145,7 @@ HEAD = """# מחקר: האם מדד Fear & Greed (והדומים לו) חוזה 
 
 
 def main() -> None:
-    parts = [HEAD, CONCLUSIONS] + [section(n, t) for n, t in STUDIES] + [components()]
+    parts = [HEAD, CONCLUSIONS] + [section(n, t) for n, t in STUDIES] + [subperiods(), components()]
     (ROOT / "sentiment" / "REPORT.md").write_text("\n".join(parts), encoding="utf-8")
     print("wrote sentiment/REPORT.md")
 

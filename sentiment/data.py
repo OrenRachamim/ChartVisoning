@@ -21,7 +21,7 @@ SDIR = ROOT / "data" / "sentiment"
 SDIR.mkdir(parents=True, exist_ok=True)
 log = logging.getLogger(__name__)
 
-MARKET = ["^GSPC", "SPY", "^VIX", "^VIX3M", "TLT", "IEF", "HYG", "LQD", "RSP", "QQQ", "IWM", "BTC-USD"]
+MARKET = ["^GSPC", "SPY", "^VIX", "^VIX3M", "TLT", "IEF", "HYG", "LQD", "RSP", "QQQ", "IWM", "BTC-USD", "^IXIC", "^RUT", "^VXN", "^RVX"]
 
 
 def market_data(refresh: bool = False) -> pd.DataFrame:

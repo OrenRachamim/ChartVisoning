@@ -148,6 +148,14 @@ def main() -> None:
         study("fg_reconstructed_spx", recon["fg_recon"], spx, first_test_year=2013)
     if "vix" in which:
         study("vix_spx", vix_to_index(mkt["^VIX"].dropna()), spx, first_test_year=1998)
+    if "vix_nasdaq" in which:
+        study("vix_nasdaq", vix_to_index(mkt["^VIX"].dropna()), mkt["^IXIC"], first_test_year=1998)
+    if "vix_russell" in which:
+        study("vix_russell", vix_to_index(mkt["^VIX"].dropna()), mkt["^RUT"], first_test_year=1998)
+    if "vxn_nasdaq" in which and mkt["^VXN"].notna().sum() > 1000:
+        study("vxn_nasdaq", vix_to_index(mkt["^VXN"].dropna()), mkt["^IXIC"], first_test_year=2006)
+    if "rvx_russell" in which and mkt["^RVX"].notna().sum() > 1000:
+        study("rvx_russell", vix_to_index(mkt["^RVX"].dropna()), mkt["^RUT"], first_test_year=2008)
     if "crypto" in which:
         study("crypto_fg_btc", crypto_fear_greed(), mkt["BTC-USD"], first_test_year=2021)
     if "cnn" in which:
